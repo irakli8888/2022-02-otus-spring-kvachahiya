@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="questionnaireHandler" class="handler.QuestionnaireHandler">
+    </bean>
+
+    <bean id="questionnaireDaoImpl" class="dao.QuestionnaireDaoImpl">
+        <constructor-arg ref="questionnaireHandler"/>
+    </bean>
+
+
+    <bean id="CSVParser" class="util.CSVParser" init-method="parse">
+        <constructor-arg value="classpath:csv/question.csv"/>
+        <constructor-arg ref="questionnaireDaoImpl"/>
+    </bean>
+
+    <bean id="questionService" class="service.QuestionServiceImpl">
+        <constructor-arg ref="questionnaireDaoImpl"/>
+    </bean>
+</beans>
