@@ -1,23 +1,18 @@
 package ru.otus.questionnarie.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
 @Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
+@RequiredArgsConstructor
 public class Questionnaire {
 
     //ответы
-    private List<Answer> answers;
+    private final List<Answer> answers;
     //вопрос
-    private Question question;
+    private final Question question;
     //верный ответ
-    private Response response;
+    private final Response response;
 
 }

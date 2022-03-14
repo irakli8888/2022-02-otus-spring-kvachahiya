@@ -1,16 +1,11 @@
 package ru.otus.questionnarie.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
+@RequiredArgsConstructor
 public class Question {
 
-    private String questionValue;
+    private final String questionValue;
 
 }
