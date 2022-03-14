@@ -7,6 +7,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import ru.otus.questionnarie.service.QuestionService;
 import ru.otus.questionnarie.service.QuestionServiceImpl;
+import ru.otus.questionnarie.util.CSVParser;
 
 @ComponentScan
 @Configuration
@@ -17,9 +18,8 @@ public class QuestionnarieApplication {
         AnnotationConfigApplicationContext context =
                 new AnnotationConfigApplicationContext(QuestionnarieApplication.class);
         QuestionService questionService = context.getBean(QuestionServiceImpl.class);
+        CSVParser parser = context.getBean(CSVParser.class);
+        parser.parse();
         questionService.conductTest();
-
-
     }
-
 }
