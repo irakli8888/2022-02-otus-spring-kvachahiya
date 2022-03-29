@@ -11,7 +11,7 @@ import java.util.Locale;
  */
 @Component
 @RequiredArgsConstructor
-public class Messages {
+public class MessageLocalizationService {
 
     private final MessageSource messageSource;
 

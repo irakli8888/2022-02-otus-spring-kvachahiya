@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import ru.otus.questionnarie_boot.dao.QuestionnaireDao;
 import ru.otus.questionnarie_boot.domain.Questionnaire;
-import ru.otus.questionnarie_boot.util.Messages;
+import ru.otus.questionnarie_boot.util.MessageLocalizationService;
 
 import java.util.List;
 import java.util.Scanner;
@@ -19,7 +19,7 @@ public class QuestionServiceImpl implements QuestionService{
     private final QuestionnaireDao questionnaireDao;
     @Value("${threshold.for.offsetting}")
     private int thresholdForOffsetting;
-    private final Messages messages;
+    private final MessageLocalizationService messages;
 
     @Override
     public void conductTest() {
