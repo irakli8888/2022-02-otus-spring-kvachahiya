@@ -1,0 +1,10 @@
+threshold.for.offsetting : 3
+csv.file.path : src/main/resources/csv/question.csv
+csv.file.path.ru : src/main/resources/csv/question_ru.csv
+spring.banner.image.location : classpath:banner.txt
+spring.messages.basename : i18n/messages
+language:
+ ru : true
+spring:
+ main:
+  allow-circular-references: true
