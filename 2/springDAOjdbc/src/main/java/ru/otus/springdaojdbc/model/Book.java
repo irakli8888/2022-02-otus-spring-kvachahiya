@@ -3,12 +3,9 @@ package ru.otus.springdaojdbc.model;
 import lombok.*;
 
 
-@Getter
-@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
-@EqualsAndHashCode
+@Data
 public class Book {
     private Long id;
     private String name;

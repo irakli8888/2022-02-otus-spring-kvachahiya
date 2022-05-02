@@ -29,7 +29,7 @@ class AuthorDaoJdbcTest {
         author.setName("1");
         author.setLastName("2");
         Author expectedAuthor = authorDaoJdbc.add(author);
-        assertNotNull(expectedAuthor.getId(), "author nor added");
+        assertNotNull(expectedAuthor.getId());
     }
 
 
@@ -37,13 +37,13 @@ class AuthorDaoJdbcTest {
     void delete() {
         authorDaoJdbc.deleteById(1l);
         List<Author> authorList = authorDaoJdbc.findAll();
-        assertEquals(0, authorList.size(), "author not fetched");
+        assertEquals(0, authorList.size());
     }
 
     @Test
     void findAll() {
         List<Author> authorList = authorDaoJdbc.findAll();
-        assertEquals(1, authorList.size(), "author not fetched");
+        assertEquals(1, authorList.size());
     }
 
     @Test

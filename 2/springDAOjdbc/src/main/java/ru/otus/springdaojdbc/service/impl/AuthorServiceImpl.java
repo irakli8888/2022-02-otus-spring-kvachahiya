@@ -44,8 +44,4 @@ public class AuthorServiceImpl implements AuthorService {
     public void deleteById(Long id){
         authorDao.deleteById(id);
     }
-
-
-
-
 }

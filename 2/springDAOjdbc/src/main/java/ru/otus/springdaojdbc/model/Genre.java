@@ -3,9 +3,7 @@ package ru.otus.springdaojdbc.model;
 import lombok.*;
 
 
-@Getter
-@Setter
-@ToString
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class Genre {
