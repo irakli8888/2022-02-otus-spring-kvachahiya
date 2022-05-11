@@ -18,7 +18,7 @@ public class Comment {
     @Column(name = "text", length = 50, nullable = false)
     private String text;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "book_id")
     private Book book;
 

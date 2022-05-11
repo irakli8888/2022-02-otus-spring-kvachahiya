@@ -1,6 +1,7 @@
 package ru.otus.springjpahibernate.repository.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import ru.otus.springjpahibernate.model.Comment;
 import ru.otus.springjpahibernate.repository.CommentRepository;
@@ -12,7 +13,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-@Repository
+@Component
 @RequiredArgsConstructor
 public class CommentRepositoryImpl implements CommentRepository<Long, Comment> {
 
@@ -26,11 +27,6 @@ public class CommentRepositoryImpl implements CommentRepository<Long, Comment> {
         } else {
             return entityManager.merge(comment);
         }
-    }
-
-    @Override
-    public void update(Comment comment) {
-
     }
 
     @Override
@@ -50,18 +46,10 @@ public class CommentRepositoryImpl implements CommentRepository<Long, Comment> {
     }
 
     @Override
-    public Long count() {
-        return null;
-    }
-
-    @Override
     public Optional findById(Long id) {
-        TypedQuery<Comment> query = entityManager.createQuery(
-                "select c from Comment c where c.id = :id"
-                , Comment.class);
-        query.setParameter("id", id);
+        Comment comment = entityManager.find(Comment.class, id);
         try {
-            return Optional.of(query.getSingleResult());
+            return Optional.of(comment);
         } catch (NoResultException e) {
             return Optional.empty();
         }

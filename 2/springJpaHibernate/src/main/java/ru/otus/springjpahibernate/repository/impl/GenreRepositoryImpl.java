@@ -1,6 +1,7 @@
 package ru.otus.springjpahibernate.repository.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import ru.otus.springjpahibernate.model.Genre;
 import ru.otus.springjpahibernate.repository.GenreRepository;
@@ -12,7 +13,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-@Repository
+@Component
 @RequiredArgsConstructor
 public class GenreRepositoryImpl implements GenreRepository<Long, Genre> {
 
@@ -26,11 +27,6 @@ public class GenreRepositoryImpl implements GenreRepository<Long, Genre> {
         } else {
             return entityManager.merge(genre);
         }
-    }
-
-    @Override
-    public void update(Genre genre) {
-
     }
 
     @Override
@@ -50,18 +46,10 @@ public class GenreRepositoryImpl implements GenreRepository<Long, Genre> {
     }
 
     @Override
-    public Long count() {
-        return null;
-    }
-
-    @Override
     public Optional findById(Long id) {
-        TypedQuery<Genre> query = entityManager.createQuery(
-                "select g from Genre g where g.id = :id"
-                , Genre.class);
-        query.setParameter("id", id);
+        Genre genre = entityManager.find(Genre.class, id);
         try {
-            return Optional.of(query.getSingleResult());
+            return Optional.of(genre);
         } catch (NoResultException e) {
             return Optional.empty();
         }

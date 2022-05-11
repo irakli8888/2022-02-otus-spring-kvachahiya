@@ -8,6 +8,8 @@ import ru.otus.springjpahibernate.model.Book;
 import ru.otus.springjpahibernate.model.Comment;
 import ru.otus.springjpahibernate.service.BookService;
 
+import java.util.stream.Collectors;
+
 @ShellComponent
 @RequiredArgsConstructor
 public class BookController {
@@ -48,6 +50,18 @@ public class BookController {
                                  @ShellOption(value = {"book_id", "bi"}, defaultValue = "0") long bookId){
         Comment comment = bookService.addComment(bookId, text);
         System.out.println("Comment has been created: " + comment.toString());
+    }
+
+    @ShellMethod("show all comments")
+    public void showBooksComments(){
+        System.out.println("Books comments:");
+        bookService
+                .findAll()
+                .stream()
+                .filter(book -> !book.getCommentList().isEmpty())
+                .map(book -> book.getCommentList())
+                .collect(Collectors.toList())
+                .forEach(comments -> System.out.println(comments.toString()));
     }
 
 }

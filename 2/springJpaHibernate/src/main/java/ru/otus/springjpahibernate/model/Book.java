@@ -28,18 +28,16 @@ public class Book {
     @Column(name = "year_of_publication", nullable = false)
     private int yearOfPublication;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "genre_id")
     private Genre genre;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "author_id")
     private Author author;
 
     @Fetch(FetchMode.SUBSELECT)
-    @OneToMany(cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY,
-            orphanRemoval = true,
+    @OneToMany(orphanRemoval = true,
             mappedBy = "book")
     private List<Comment> commentList;
 

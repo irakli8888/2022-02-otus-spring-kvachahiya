@@ -29,9 +29,7 @@ public class Author {
     private String lastName;
 
     @Fetch(FetchMode.SUBSELECT)
-    @OneToMany(cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY,
-            orphanRemoval = true,
+    @OneToMany(orphanRemoval = true,
             mappedBy = "author")
     private List<Book> books;
 

@@ -6,15 +6,11 @@ import java.util.Optional;
 public interface DomainCrudRepository<K, T> {
     T add(T domain);
 
-    void update(T domain);
-
     void delete(T domain);
 
     List<T> findAll();
 
     void deleteById(K id);
-
-    K count();
 
     Optional findById(K id);
 }

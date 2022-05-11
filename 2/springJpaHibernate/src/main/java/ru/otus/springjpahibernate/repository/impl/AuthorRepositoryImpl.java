@@ -1,6 +1,7 @@
 package ru.otus.springjpahibernate.repository.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import ru.otus.springjpahibernate.model.Author;
 import ru.otus.springjpahibernate.repository.AuthorRepository;
@@ -12,7 +13,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-@Repository
+@Component
 @RequiredArgsConstructor
 public class AuthorRepositoryImpl implements AuthorRepository<Long, Author> {
 
@@ -26,11 +27,6 @@ public class AuthorRepositoryImpl implements AuthorRepository<Long, Author> {
         } else {
          return entityManager.merge(author);
         }
-    }
-
-    @Override
-    public void update(Author author) {
-
     }
 
     @Override
@@ -49,19 +45,12 @@ public class AuthorRepositoryImpl implements AuthorRepository<Long, Author> {
         entityManager.remove(findById(id).get());
     }
 
-    @Override
-    public Long count() {
-        return null;
-    }
 
     @Override
     public Optional findById(Long id) {
-        TypedQuery<Author> query = entityManager.createQuery(
-                "select a from Author a where a.id = :id"
-                , Author.class);
-        query.setParameter("id", id);
+        Author author = entityManager.find(Author.class, id);
         try {
-            return Optional.of(query.getSingleResult());
+            return Optional.of(author);
         } catch (NoResultException e) {
             return Optional.empty();
         }

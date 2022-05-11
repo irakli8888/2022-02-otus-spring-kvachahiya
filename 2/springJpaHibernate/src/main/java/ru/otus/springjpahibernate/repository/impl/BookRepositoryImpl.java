@@ -1,6 +1,7 @@
 package ru.otus.springjpahibernate.repository.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import ru.otus.springjpahibernate.model.Book;
 import ru.otus.springjpahibernate.repository.BookRepository;
@@ -12,7 +13,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-@Repository
+@Component
 @RequiredArgsConstructor
 public class BookRepositoryImpl implements BookRepository<Long, Book> {
 
@@ -29,11 +30,6 @@ public class BookRepositoryImpl implements BookRepository<Long, Book> {
     }
 
     @Override
-    public void update(Book book) {
-
-    }
-
-    @Override
     public void delete(Book book) {
         entityManager.remove(book);
     }
@@ -41,7 +37,8 @@ public class BookRepositoryImpl implements BookRepository<Long, Book> {
     @Override
     public List<Book> findAll() {
         return entityManager
-                .createQuery("select b from Book b", Book.class).getResultList();
+                .createQuery("select b from Book b " +
+                        "left join fetch b.commentList", Book.class).getResultList();
     }
 
     @Override
@@ -50,18 +47,10 @@ public class BookRepositoryImpl implements BookRepository<Long, Book> {
     }
 
     @Override
-    public Long count() {
-        return null;
-    }
-
-    @Override
     public Optional findById(Long id) {
-        TypedQuery<Book> query = entityManager.createQuery(
-                "select b from Book b where b.id = :id"
-                , Book.class);
-        query.setParameter("id", id);
+        Book book = entityManager.find(Book.class, id);
         try {
-            return Optional.of(query.getSingleResult());
+            return Optional.of(book);
         } catch (NoResultException e) {
             return Optional.empty();
         }

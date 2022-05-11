@@ -31,7 +31,6 @@ public class Genre {
             CascadeType.DETACH,
             CascadeType.PERSIST,
             CascadeType.REFRESH},
-            fetch = FetchType.LAZY,
             orphanRemoval = true,
             mappedBy = "genre")
     private List<Book> books;
