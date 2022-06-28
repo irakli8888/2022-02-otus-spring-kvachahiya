@@ -7,7 +7,7 @@ import ru.otus.springjpahibernate.service.CommentService;
 
 @ShellComponent
 @RequiredArgsConstructor
-public class CommentController {
+public class CommentController{
 
     private final CommentService commentService;
 

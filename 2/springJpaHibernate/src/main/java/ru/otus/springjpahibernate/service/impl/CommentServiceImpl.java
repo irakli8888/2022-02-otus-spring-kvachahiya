@@ -16,7 +16,6 @@ public class CommentServiceImpl implements CommentService {
     private final CommentRepositoryImpl commentRepository;
 
     @Override
-    @Transactional(readOnly = true)
     public List<Comment> findAll() {
         return commentRepository.findAll();
     }

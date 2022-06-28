@@ -18,7 +18,8 @@ public class Comment {
     @Column(name = "text", length = 50, nullable = false)
     private String text;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    //EAGER - дефолтное значение
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "book_id")
     private Book book;
 

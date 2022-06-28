@@ -64,4 +64,13 @@ public class BookController {
                 .forEach(comments -> System.out.println(comments.toString()));
     }
 
+    @ShellMethod("show all comments by book")
+    public void showBooksCommentsByBook(@ShellOption(value = {"id", "i"}) Long id){
+        System.out.println("Books comments:");
+        bookService
+                .findById(id)
+                .getCommentList()
+                .forEach(System.out::println);
+    }
+
 }

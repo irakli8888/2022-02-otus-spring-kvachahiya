@@ -46,13 +46,11 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    @Transactional(readOnly = true)
     public List<Book> findAll() {
         return bookRepository.findAll();
     }
 
     @Override
-    @Transactional(readOnly = true)
     public Book findById(Long id) {
         try {
             return (Book) bookRepository.findById(id).orElseThrow(() -> new RuntimeException("book not found"));

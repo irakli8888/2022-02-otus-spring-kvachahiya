@@ -37,8 +37,7 @@ public class BookRepositoryImpl implements BookRepository<Long, Book> {
     @Override
     public List<Book> findAll() {
         return entityManager
-                .createQuery("select b from Book b " +
-                        "left join fetch b.commentList", Book.class).getResultList();
+                .createQuery("select b from Book b ", Book.class).getResultList();
     }
 
     @Override

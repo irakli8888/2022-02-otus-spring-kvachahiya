@@ -4,10 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.*;
 
 import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.util.List;
 
 
@@ -28,16 +30,18 @@ public class Book {
     @Column(name = "year_of_publication", nullable = false)
     private int yearOfPublication;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "genre_id")
     private Genre genre;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "author_id")
     private Author author;
 
-    @Fetch(FetchMode.SUBSELECT)
+    //fetch = FetchType.LAZY, - по умолчанию
     @OneToMany(orphanRemoval = true,
+            fetch = FetchType.LAZY,
             mappedBy = "book")
     private List<Comment> commentList;
 
