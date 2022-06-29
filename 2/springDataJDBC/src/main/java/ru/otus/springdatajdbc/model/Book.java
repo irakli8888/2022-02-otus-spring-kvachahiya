@@ -1,4 +1,4 @@
-package ru.otus.springjpahibernate.model;
+package ru.otus.springdatajdbc.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
-import org.hibernate.annotations.Proxy;
 
 import javax.persistence.*;
 import java.util.List;
@@ -33,11 +32,13 @@ public class Book {
     @JoinColumn(name = "genre_id")
     private Genre genre;
 
-    @Fetch(FetchMode.SUBSELECT)
+
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "author_id")
     private Author author;
 
+    //fetch = FetchType.LAZY, - по умолчанию
+    @Fetch(FetchMode.SUBSELECT)
     @OneToMany(orphanRemoval = true,
             fetch = FetchType.LAZY,
             mappedBy = "book")
