@@ -16,7 +16,6 @@ public class GenreServiceImpl implements GenreService {
     private final GenreRepository genreRepository;
 
     @Override
-    @Transactional
     public Genre add(String name) {
         Genre genre = new Genre();
         genre.setName(name);
@@ -29,7 +28,6 @@ public class GenreServiceImpl implements GenreService {
     }
 
     @Override
-    @Transactional
     public void deleteById(Long id) {
         genreRepository.deleteById(id);
     }

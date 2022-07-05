@@ -23,7 +23,6 @@ public class BookServiceImpl implements BookService {
     private final CommentRepository commentRepository;
 
     @Override
-    @Transactional
     public Book createBook(String name, int yearOfPublication, long genreId, long authorId) {
         Book book = new Book();
         try {
@@ -58,13 +57,11 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    @Transactional
     public void deleteById(Long id) {
         bookRepository.deleteById(id);
     }
 
     @Override
-    @Transactional
     public Comment addComment(Long bookId, String text) {
         Book book = findById(bookId);
         Comment comment = new Comment();
