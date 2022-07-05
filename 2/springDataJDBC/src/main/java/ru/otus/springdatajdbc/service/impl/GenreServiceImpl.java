@@ -2,7 +2,6 @@ package ru.otus.springdatajdbc.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import ru.otus.springdatajdbc.model.Genre;
 import ru.otus.springdatajdbc.repository.GenreRepository;
 import ru.otus.springdatajdbc.service.GenreService;

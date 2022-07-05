@@ -2,7 +2,6 @@ package ru.otus.springdatajdbc.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import ru.otus.springdatajdbc.model.Book;
 import ru.otus.springdatajdbc.model.Comment;
 import ru.otus.springdatajdbc.repository.AuthorRepository;
