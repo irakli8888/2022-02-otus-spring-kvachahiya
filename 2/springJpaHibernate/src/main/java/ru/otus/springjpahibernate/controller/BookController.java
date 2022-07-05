@@ -1,20 +1,26 @@
 package ru.otus.springjpahibernate.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.hibernate.Hibernate;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import ru.otus.springjpahibernate.model.Book;
 import ru.otus.springjpahibernate.model.Comment;
+import ru.otus.springjpahibernate.service.BookCommentFacadeService;
 import ru.otus.springjpahibernate.service.BookService;
 
-import java.util.stream.Collectors;
+import java.util.List;
+
 
 @ShellComponent
 @RequiredArgsConstructor
 public class BookController {
 
     private final BookService bookService;
+    private final BookCommentFacadeService bookCommentFacadeService;
 
     @ShellMethod("show all books")
     public void showBooks(){
@@ -52,24 +58,13 @@ public class BookController {
         System.out.println("Comment has been created: " + comment.toString());
     }
 
-    @ShellMethod("show all comments")
-    public void showBooksComments(){
-        System.out.println("Books comments:");
-        bookService
-                .findAll()
-                .stream()
-                .filter(book -> !book.getCommentList().isEmpty())
-                .map(book -> book.getCommentList())
-                .collect(Collectors.toList())
-                .forEach(comments -> System.out.println(comments.toString()));
-    }
 
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     @ShellMethod("show all comments by book")
     public void showBooksCommentsByBook(@ShellOption(value = {"id", "i"}) Long id){
         System.out.println("Books comments:");
-        bookService
-                .findById(id)
-                .getCommentList()
+        List<Comment> commentList = bookCommentFacadeService.showBooksCommentsByBook(id);
+        commentList
                 .forEach(System.out::println);
     }
 

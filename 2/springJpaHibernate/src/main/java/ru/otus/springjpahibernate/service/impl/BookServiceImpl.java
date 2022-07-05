@@ -15,6 +15,7 @@ import ru.otus.springjpahibernate.repository.impl.GenreRepositoryImpl;
 import ru.otus.springjpahibernate.service.BookService;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor

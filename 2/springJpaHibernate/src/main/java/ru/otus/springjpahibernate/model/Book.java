@@ -33,11 +33,11 @@ public class Book {
     @JoinColumn(name = "genre_id")
     private Genre genre;
 
-    @Fetch(FetchMode.SUBSELECT)
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "author_id")
     private Author author;
 
+    @Fetch(FetchMode.SUBSELECT)
     @OneToMany(orphanRemoval = true,
             fetch = FetchType.LAZY,
             mappedBy = "book")
