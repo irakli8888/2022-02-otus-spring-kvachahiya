@@ -1,26 +1,18 @@
-package ru.otus.springjpahibernate.controller;
+package ru.otus.springdatajdbc.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.hibernate.Hibernate;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
-import ru.otus.springjpahibernate.model.Book;
-import ru.otus.springjpahibernate.model.Comment;
-import ru.otus.springjpahibernate.service.BookCommentFacadeService;
-import ru.otus.springjpahibernate.service.BookService;
-
-import java.util.List;
-
+import ru.otus.springdatajdbc.model.Book;
+import ru.otus.springdatajdbc.model.Comment;
+import ru.otus.springdatajdbc.service.BookService;
 
 @ShellComponent
 @RequiredArgsConstructor
 public class BookController {
 
     private final BookService bookService;
-    private final BookCommentFacadeService bookCommentFacadeService;
 
     @ShellMethod("show all books")
     public void showBooks(){
@@ -59,13 +51,5 @@ public class BookController {
     }
 
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
-    @ShellMethod("show all comments by book")
-    public void showBooksCommentsByBook(@ShellOption(value = {"id", "i"}) Long id){
-        System.out.println("Books comments:");
-        List<Comment> commentList = bookCommentFacadeService.showBooksCommentsByBook(id);
-        commentList
-                .forEach(System.out::println);
-    }
 
 }

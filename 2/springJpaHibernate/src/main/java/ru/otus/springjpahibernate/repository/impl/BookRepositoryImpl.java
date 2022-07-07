@@ -1,6 +1,7 @@
 package ru.otus.springjpahibernate.repository.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.hibernate.Hibernate;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import ru.otus.springjpahibernate.model.Book;
@@ -13,7 +14,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-@Component
+@Repository
 @RequiredArgsConstructor
 public class BookRepositoryImpl implements BookRepository<Long, Book> {
 

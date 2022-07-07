@@ -1,40 +1,34 @@
-package ru.otus.springjpahibernate.service.impl;
+package ru.otus.springdatajdbc.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
-import ru.otus.springjpahibernate.model.Author;
-import ru.otus.springjpahibernate.model.Book;
-import ru.otus.springjpahibernate.model.Comment;
-import ru.otus.springjpahibernate.model.Genre;
-import ru.otus.springjpahibernate.repository.impl.AuthorRepositoryImpl;
-import ru.otus.springjpahibernate.repository.impl.BookRepositoryImpl;
-import ru.otus.springjpahibernate.repository.impl.CommentRepositoryImpl;
-import ru.otus.springjpahibernate.repository.impl.GenreRepositoryImpl;
-import ru.otus.springjpahibernate.service.BookService;
+import ru.otus.springdatajdbc.model.Book;
+import ru.otus.springdatajdbc.model.Comment;
+import ru.otus.springdatajdbc.repository.AuthorRepository;
+import ru.otus.springdatajdbc.repository.BookRepository;
+import ru.otus.springdatajdbc.repository.CommentRepository;
+import ru.otus.springdatajdbc.repository.GenreRepository;
+import ru.otus.springdatajdbc.service.BookService;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class BookServiceImpl implements BookService {
 
-    private final AuthorRepositoryImpl authorRepository;
-    private final GenreRepositoryImpl genreRepository;
-    private final BookRepositoryImpl bookRepository;
-    private final CommentRepositoryImpl commentRepository;
+    private final AuthorRepository authorRepository;
+    private final GenreRepository genreRepository;
+    private final BookRepository bookRepository;
+    private final CommentRepository commentRepository;
 
     @Override
-    @Transactional
     public Book createBook(String name, int yearOfPublication, long genreId, long authorId) {
         Book book = new Book();
         try {
-            book.setAuthor((Author) authorRepository
+            book.setAuthor(authorRepository
                     .findById(authorId)
                     .orElseThrow(() -> new RuntimeException("author not found")));
-            book.setGenre((Genre) genreRepository
+            book.setGenre(genreRepository
                     .findById(genreId)
                     .orElseThrow(() -> new RuntimeException("author not found")));
         } catch (Throwable e) {
@@ -43,7 +37,7 @@ public class BookServiceImpl implements BookService {
         book.setName(name);
         book.setYearOfPublication(yearOfPublication);
 
-        return bookRepository.add(book);
+        return bookRepository.save(book);
     }
 
     @Override
@@ -62,19 +56,17 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    @Transactional
     public void deleteById(Long id) {
         bookRepository.deleteById(id);
     }
 
     @Override
-    @Transactional
-    public Comment addComment(Long bookId,String text) {
+    public Comment addComment(Long bookId, String text) {
         Book book = findById(bookId);
         Comment comment = new Comment();
         comment.setText(text);
         comment.setBook(book);
         book.getCommentList().add(comment);
-        return commentRepository.add(comment);
+        return commentRepository.save(comment);
     }
 }
