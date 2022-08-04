@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/fontawesome.min.css">
+    <link rel="stylesheet" href="https://formden.com/static/cdn/bootstrap-iso.css" />
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+
+</head>
+<body>
+<div class="container mt-5 pt-5">
+    <ul class="nav nav-tabs justify-content-center" id="product">
+        <li class="nav-item" role="presentation"><a id="1" class="nav-link active" aria-current="page" href="#home" role="tab" data-toggle="pill">Книги</a></li>
+    </ul>
+    <div class="tab-content">
+        <div class="container pt-4 pb-4">
+        </div>
+        <div role="tabpanel" class="tab-pane fade show active" aria-labelledby="nav-home-tab" id="home">
+            <table class="table" id="books">
+                <thead class="thread-primary">
+                <tr>
+                    <th scope="col"></th>
+                    <th scope="col">Название</th>
+                    <th scope="col">Год публикации</th>
+                    <th scope="col">Жанр</th>
+                    <th scope="col">Автор</th>
+                    <th scope="col"></th>
+                </tr>
+                </thead>
+                <tbody id="table_body">
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!--для работы с модальным окном бутстрапа-->
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"/>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script>
+    $(function (){
+        $.get('/book').done(function (books){
+            books.forEach(function (book){
+                var count = 1
+                $('tbody').append(
+                    `<tr>
+<td scope="col">${count}</td>
+<td scope="col">${book.name}</td>
+<td scope="col">${book.yearOfPublication}</td>
+<td scope="col">${book.genreName}</td>
+<td scope="col">${book.authorName}</td>
+<td>
+<form>
+<a class="btn"
+ name="delete-book"
+data-bs-whatever-id=${book.id}>
+ <i class="bi bi-x-square"></i>
+ </a>
+</form>
+</tr>`
+                )
+            })
+        })
+    })
+</script>
+<script>
+    window.onload = function() {
+        let deletedElementLog = document.getElementsByName('delete-book')
+        deletedElementLog.forEach(item => {
+            $(item).on('click', function (event) {
+                let id = item.getAttribute('data-bs-whatever-id');
+                console.log(id)
+                $.ajax({
+                    type: 'POST',
+                    url: '/book/delete/' + id,
+                    success: function (response) {
+                        alert(response);
+                    }
+                })
+
+            })
+        })
+    };
+</script>
+
+<script th:inline="javascript">
+
+    var exampleModalScreen = document.getElementById('myModal')
+    exampleModalScreen.addEventListener('show.bs.modal', function (event) {
+        // Кнопка, запускающая модальное окно
+        var button = event.relatedTarget
+    })
+
+    var exampleModal = document.getElementById('myModal')
+    exampleModal.addEventListener('show.bs.modal', function (event) {
+        // Кнопка, запускающая модальное окно
+        var button = event.relatedTarget
+        console.log(button.nodeName)
+        // Извлечь информацию из атрибутов data-bs- *
+        var bookName = button.getAttribute('data-bs-whatever-name')
+        var lastname = button.getAttribute('data-bs-whatever-genre')
+        var year = button.getAttribute('data-bs-whatever-year')
+        var author = button.getAttribute('data-bs-whatever-author')
+        var id = button.getAttribute('data-bs-whatever-id')
+
+        //
+        // Обновите содержимое модального окна.
+        // var modalTitle = exampleModal.querySelector('.modal-title')
+        var inputName = exampleModal.querySelector('#recipient-name-edit')
+
+        var inputYear = exampleModal.querySelector('#recipient-year-edit')
+
+        var inputAuthor = exampleModal.querySelector('#recipient-author-edit')
+
+
+        var inputId = exampleModal.querySelector('#recipient-id-edit')
+
+
+        inputName.value = bookName
+        inputYear.value = year;
+
+        inputAuthor.value = author;
+
+        inputId.value = id;
+    })
+</script>
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js" integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/" crossorigin="anonymous"></script>
+
+
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+
+</body>
+</html>
