@@ -1,0 +1,14 @@
+
+spring:
+  data:
+    mongodb:
+      port: 27017
+      database: library
+      username: mongo
+      password: mongo
+      host: localhost
+      authentication-database: admin
+
+mongock:
+  migration-scan-package:
+    - ru.otus.springwebflux.migrations
